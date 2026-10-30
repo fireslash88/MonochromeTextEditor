@@ -128,7 +128,7 @@ void UIDraw::DrawEditPanel(EditorConfig& config,TextBuffer& text, Font font) {
                 renameFileDialogState=!renameFileDialogState;
                 focusedWindow = RenameFileWindow;
 
-                strcpy_s( newFileName,fileDialogState.fileNameText);
+                strcpy( newFileName,fileDialogState.fileNameText);
 
             }else {
                 TraceLog(LOG_WARNING,TextFormat("File hasn't loaded yet!"));

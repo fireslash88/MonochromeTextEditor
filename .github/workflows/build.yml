@@ -1,0 +1,106 @@
+
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-windows:
+    name: Build Windows
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure CMake
+        run: cmake -S . -B build
+
+      - name: Build
+        run: cmake --build build --config Release --parallel
+
+      - name: Install
+        run: cmake --install build --prefix staging --config Release
+
+      - name: Package
+        shell: pwsh
+        run: Compress-Archive -Path staging/* -DestinationPath TextEditor-Windows.zip
+
+      - name: Upload Windows package
+        uses: actions/upload-artifact@v4
+        with:
+          name: TextEditor-Windows
+          path: TextEditor-Windows.zip
+
+  build-linux:
+    name: Build Linux
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            build-essential \
+            libgl1-mesa-dev \
+            libx11-dev \
+            libxrandr-dev \
+            libxi-dev \
+            libxcursor-dev \
+            libxinerama-dev \
+            libxext-dev \
+            libxfixes-dev \
+            libasound2-dev \
+            libwayland-dev \
+            libxkbcommon-dev
+
+      - name: Configure CMake
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build build --parallel
+
+      - name: Install
+        run: cmake --install build --prefix staging
+
+      - name: Package
+        run: tar -czf TextEditor-Linux.tar.gz -C staging .
+
+      - name: Upload Linux package
+        uses: actions/upload-artifact@v4
+        with:
+          name: TextEditor-Linux
+          path: TextEditor-Linux.tar.gz
+
+  release:
+    name: Create GitHub Release
+    needs: [build-windows, build-linux]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download Windows package
+        uses: actions/download-artifact@v4
+        with:
+          name: TextEditor-Windows
+          path: release-assets
+
+      - name: Download Linux package
+        uses: actions/download-artifact@v4
+        with:
+          name: TextEditor-Linux
+          path: release-assets
+
+      - name: Publish Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: release-assets/*
+          generate_release_notes: true
