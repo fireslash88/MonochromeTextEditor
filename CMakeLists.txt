@@ -29,8 +29,8 @@ endif()
 # Include files in the src
 add_executable(${PROJECT_NAME}
         src/main.cpp
-        src/core/editor.h
-        src/core/editor.cpp
+        src/core/Editor.h
+        src/core/Editor.cpp
         src/settings/config.h
         src/core/EditorControls.cpp
         src/core/TextBuffer.h
