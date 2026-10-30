@@ -18,7 +18,7 @@ int main() {
     std::string stylePath = std::string(GetApplicationDirectory()) + "fonts-styles/styles/genesis.rgs";
     GuiLoadStyle(stylePath.c_str());
 
-    InitWindow(screenWidth,screenHeight,"Template Raylib");
+    InitWindow(screenWidth,screenHeight,"Monochrome Text Editor");
 
     //Initialize the font and all the variables needed
     editor.Initializing();
