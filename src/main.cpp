@@ -2,7 +2,7 @@
 #include "core/Editor.h"
 
 #define RAYGUI_IMPLEMENTATION
-#include "src/raygui.h"
+#include "external/raygui.h"
 
 //Global Variables
 const int screenWidth=1280;
@@ -15,6 +15,8 @@ int main() {
     //Set Window to be resizable
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     SetConfigFlags(FLAG_MSAA_4X_HINT | FLAG_WINDOW_HIGHDPI);
+    std::string stylePath = std::string(GetApplicationDirectory()) + "fonts-styles/styles/genesis.rgs";
+    GuiLoadStyle(stylePath.c_str());
 
     InitWindow(screenWidth,screenHeight,"Template Raylib");
 

@@ -1,15 +1,8 @@
 #include "Editor.h"
 
-void Editor::HandleInsertMode() {
-    // Activate insert mode
-    if (IsKeyPressed(KEY_LEFT_SHIFT)) {
-        config.insertMode = !config.insertMode;
-    }
-}
-
 void Editor::HandleTyping() {
     // Logic that handles typing
-    if (config.insertMode) {
+    if (text.isFileLoaded) {
         int key = GetCharPressed();
 
         while (key > 0) {
@@ -22,14 +15,14 @@ void Editor::HandleTyping() {
 }
 
 void Editor::HandleNewLine() {
-    if (IsKeyPressed(KEY_ENTER) | IsKeyPressedRepeat(KEY_ENTER)) {
+    if (IsKeyPressed(KEY_ENTER) || IsKeyPressedRepeat(KEY_ENTER)) {
         text.NewLine();
     }
 }
 
 void Editor::HandleBackspace() {
     //Deletes characters
-    if (IsKeyPressed(KEY_BACKSPACE) | IsKeyPressedRepeat(KEY_BACKSPACE)) {
+    if (IsKeyPressed(KEY_BACKSPACE) || IsKeyPressedRepeat(KEY_BACKSPACE)) {
         text.Backspace();
     }
 }
@@ -41,16 +34,16 @@ void Editor::HandleTab() {
 }
 
 void Editor::HandleCursorMovement() {
-    if (IsKeyPressed(KEY_LEFT) | IsKeyPressedRepeat(KEY_LEFT)) {
+    if (IsKeyPressed(KEY_LEFT) || IsKeyPressedRepeat(KEY_LEFT)) {
         text.MoveCursorLeft();
     }
-    if (IsKeyPressed(KEY_RIGHT) | IsKeyPressedRepeat(KEY_RIGHT)) {
+    if (IsKeyPressed(KEY_RIGHT) || IsKeyPressedRepeat(KEY_RIGHT)) {
         text.MoveCursorRight();
     }
-    if (IsKeyPressed(KEY_UP) | IsKeyPressedRepeat(KEY_UP)) {
+    if (IsKeyPressed(KEY_UP) || IsKeyPressedRepeat(KEY_UP)) {
         text.MoveCursorUp();
     }
-    if (IsKeyPressed(KEY_DOWN) | IsKeyPressedRepeat(KEY_DOWN)) {
+    if (IsKeyPressed(KEY_DOWN) || IsKeyPressedRepeat(KEY_DOWN)) {
         text.MoveCursorDown();
     }
 }
@@ -66,13 +59,14 @@ void Editor::HandleDebugMode() {
 }
 
 void Editor::HandleLoadingFile() {
-    if (IsKeyPressed(KEY_F3)) {
-        text.LoadFromFile("test.cpp");
+    if (ui.fileDialogState.SelectFilePressed) {
+        text.LoadFromFile(text.filePath);
+        ui.fileDialogState.SelectFilePressed=false;
     }
 }
 
 void Editor::HandleSavingFile() {
-    if (IsKeyPressed(KEY_F4)) {
-        text.SaveToFile("test.cpp");
+    if (IsKeyPressed(KEY_F3)) {
+        text.SaveToFile(text.filePath);
     }
 }

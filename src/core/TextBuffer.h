@@ -9,13 +9,13 @@ public:
     TextBuffer() {
         cursorLine=0;
         cursorColumn=0;
+        isFileLoaded=false;
 
         lines.emplace_back();
     }
 
-    void LoadFromFile(const std::string& filePath2);
+    void LoadFromFile(const std::string& filepath2);
     void SaveToFile(const std::string& filepath2);
-    void CloseFile();
 
     // Basic text modification
     void InsertText(char character);
@@ -40,11 +40,12 @@ public:
     std::size_t GetCursorLine();
     std::size_t GetCursorColumn();
 
+    std::string filePath;
+    bool isFileLoaded;
+
 private:
     // Vector of strings
     std::vector<std::string> lines;
-
-    std::string filePath;
 
     std::size_t cursorLine;
     std::size_t cursorColumn;

@@ -1,11 +1,11 @@
-#include "textbuffer.h"
+#include "TextBuffer.h"
 #include "raylib.h"
 
 #include <iostream>
 #include <fstream>
 
-void TextBuffer::LoadFromFile(const std::string& filePath2) {
-    std::ifstream file(filePath2);
+void TextBuffer::LoadFromFile(const std::string& filepath2) {
+    std::ifstream file(filepath2);
 
     if (!file.is_open()) {
         TraceLog(LOG_ERROR,"Error while loading the file");
@@ -27,11 +27,15 @@ void TextBuffer::LoadFromFile(const std::string& filePath2) {
     cursorColumn=0;
     cursorLine=0;
 
+    filePath=filepath2;
+
+    isFileLoaded=true;
+
     TraceLog(LOG_INFO,"File loaded");
     file.close();
 }
 
-void TextBuffer::SaveToFile(const std::string &filepath2) {
+void TextBuffer::SaveToFile(const std::string& filepath2) {
     std::ofstream file (filepath2);
 
     if (!file.is_open()) {

@@ -3,18 +3,17 @@
 #include "../settings/config.h"
 #include "TextBuffer.h"
 #include "raylib.h"
+#include "../ui/UIDraw.h"
 
 class Editor {
 
-public:
-    const int MaxLines=19;
-
-private:
     EditorConfig config;
 
     TextBuffer text;
 
     Font font = {};
+
+    UIDraw ui;
 
 public:
     void Initializing();
@@ -25,8 +24,6 @@ public:
 private:
     // This is used to declare the controls of the editor.
     // Defined in EditorControls.cpp
-
-    void HandleInsertMode();
 
     void HandleTyping();
     void HandleNewLine();
@@ -39,26 +36,4 @@ private:
     void HandleLoadingFile();
     void HandleSavingFile();
 
-
-    // Drawing functions
-    // Defined in UIDrawNew.cpp
-    Vector2 anchor01 = { 0, 0 };
-    Vector2 anchor02={168,64};
-    void DrawButtons();
-    void DrawMenuLine();
-    void DrawFileTreePanel();
-    void DrawCodePanel();
-    void DrawCursorPositionPanel();
-    // void DrawFileTab();
-
-    void DrawLineNumber();
-    void DrawLineSeparator();
-    void DrawFileText();
-    void DrawCursor();
-    void DrawCursorPosition();
-
-    // For debugging
-    // Defined in UIDrawDebug.cpp
-    void DrawDebugLines();
-    void DrawDebugInfo();
 };

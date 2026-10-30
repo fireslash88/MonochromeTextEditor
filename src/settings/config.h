@@ -8,34 +8,30 @@ public:
     bool debugLines;
     bool debugInfo;
 
-    bool insertMode;
-
     int windowPadding;
     int verticalLineSpacing;
 
-    int gridWidth{};
-    int gridHeight{};
+    float gridWidth{};
+    float gridHeight{};
 
     float fontSize;
     float spacing;
 
     Color textColor{};
-    float spaceBetweenChar;
+    Color background{};
 
     EditorConfig() {
 
         debugLines=false;
         debugInfo=false;
 
-        insertMode=false;
-
         windowPadding=20;
 
         verticalLineSpacing=5;
         spacing=0;
         fontSize=30;
-        spaceBetweenChar=5;
 
-        textColor=BLACK;
+        textColor=WHITE;
+        background={46,53,61,0};
     }
 };
