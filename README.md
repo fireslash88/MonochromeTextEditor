@@ -41,6 +41,7 @@ notebooks here in Italy, and it's called "Monochrome" so I decided to go for tha
 
 >[!WARNING]
 > The software is available for Windows and Linux **ONLY**. Trying to compile or run it on other platforms such as MacOS **WILL cause problems or won't start at ALL**!
+> The software **WON'T** work in a VM since it needs a GPU or Integrated GPU!
 
 | Platforms | Availability  |
 |----------:|---------------|
